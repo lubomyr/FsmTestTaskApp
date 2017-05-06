@@ -1,0 +1,21 @@
+[
+  {"action":"LOCK", "startState":"AlarmDisarmed_AllUnlocked",    "endState":"AlarmDisarmed_AllLocked"},
+  {"action":"LOCK", "startState":"AlarmDisarmed_DriverUnlocked", "endState":"AlarmDisarmed_AllLocked"},
+  {"action":"LOCK", "startState":"AlarmDisarmed_AllLocked",      "endState":"AlarmDisarmed_AllLocked"},
+  {"action":"LOCK", "startState":"AlarmArmed_AllLocked",         "endState":"AlarmArmed_AllLocked"},
+
+  {"action":"LOCKx2", "startState":"AlarmDisarmed_AllUnlocked",    "endState":"AlarmArmed_AllLocked"},
+  {"action":"LOCKx2", "startState":"AlarmDisarmed_DriverUnlocked", "endState":"AlarmArmed_AllLocked"},
+  {"action":"LOCKx2", "startState":"AlarmDisarmed_AllLocked",      "endState":"AlarmArmed_AllLocked"},
+  {"action":"LOCKx2", "startState":"AlarmArmed_AllLocked",         "endState":"AlarmArmed_AllLocked"},
+
+  {"action":"UNLOCK", "startState":"AlarmDisarmed_AllUnlocked",    "endState":"AlarmDisarmed_AllUnlocked"},
+  {"action":"UNLOCK", "startState":"AlarmDisarmed_DriverUnlocked", "endState":"AlarmDisarmed_DriverUnlocked"},
+  {"action":"UNLOCK", "startState":"AlarmDisarmed_AllLocked",      "endState":"AlarmDisarmed_DriverUnlocked"},
+  {"action":"UNLOCK", "startState":"AlarmArmed_AllLocked",         "endState":"AlarmDisarmed_DriverUnlocked"},
+
+  {"action":"UNLOCKx2", "startState":"AlarmDisarmed_AllUnlocked",    "endState":"AlarmDisarmed_AllUnlocked"},
+  {"action":"UNLOCKx2", "startState":"AlarmDisarmed_DriverUnlocked", "endState":"AlarmDisarmed_DriverUnlocked"},
+  {"action":"UNLOCKx2", "startState":"AlarmDisarmed_AllLocked",      "endState":"AlarmDisarmed_AllUnlocked"},
+  {"action":"UNLOCKx2", "startState":"AlarmArmed_AllLocked",         "endState":"AlarmDisarmed_AllUnlocked"}
+]

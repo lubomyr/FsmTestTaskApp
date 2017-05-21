@@ -7,11 +7,22 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.lyubomyr.fsmapp.entity.Fsm;
 import com.example.lyubomyr.fsmapp.repository.FsmRepository;
 import com.example.lyubomyr.fsmapp.repository.FsmRepositoryImpl;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private FsmRepository fsmRepository;
+    private List<Fsm> fsmList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +30,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        fsmRepository = new FsmRepositoryImpl(this);
+        if (fsmList == null) {
+            fsmList = getData();
+        }
+        fsmRepository = new FsmRepositoryImpl(fsmList);
+        final String initialState = getString(R.string.initial_state);
+        if (fsmRepository.getCurrentState() == null)
+            fsmRepository.setState(initialState);
 
         bindEvents();
 
@@ -53,7 +70,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         Button button = (Button) v;
         String action = button.getText().toString();
-        String currentState = fsmRepository.getStateByAction(action);
+        fsmRepository.setAction(action);
+        String currentState = fsmRepository.getCurrentState();
         updateView(currentState);
+    }
+
+    private List<Fsm> getData() {
+        final String ACTION_KEY = getString(R.string.action);
+        final String START_STATE_KEY = getString(R.string.start_state);
+        final String END_STATE_KEY = getString(R.string.end_state);
+        List<Fsm> list = new ArrayList<>();
+        InputStream inputStream = getResources().openRawResource(R.raw.fsm_json);
+        Scanner sc = new Scanner(inputStream).useDelimiter("[\n]");
+        StringBuilder sb = new StringBuilder();
+        while (sc.hasNext()) {
+            sb.append(sc.next()).append("\n");
+        }
+        sc.close();
+
+        try {
+            JSONArray fsmListJson = new JSONArray(sb.toString());
+            for (int i = 0; i < fsmListJson.length(); i++) {
+                JSONObject model = fsmListJson.getJSONObject(i);
+                String action = model.getString(ACTION_KEY);
+                String startState = model.getString(START_STATE_KEY);
+                String endState = model.getString(END_STATE_KEY);
+                list.add(new Fsm(action, startState, endState));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 }

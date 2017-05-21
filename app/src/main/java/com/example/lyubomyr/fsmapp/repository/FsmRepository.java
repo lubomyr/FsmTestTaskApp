@@ -3,5 +3,7 @@ package com.example.lyubomyr.fsmapp.repository;
 public interface FsmRepository {
     String getCurrentState();
 
-    String getStateByAction(String action);
+    void setState(String state);
+
+    void setAction(String action);
 }
